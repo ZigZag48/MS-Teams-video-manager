@@ -9,7 +9,7 @@ class App {
   /**
    * methods
    */
-  open(path = "/") {
+  open(path = "/#fake") {
     browser.url(path);
   }
 }

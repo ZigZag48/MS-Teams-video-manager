@@ -1,0 +1,6 @@
+{
+  "enumAllSites": "https://graph.microsoft.com/v1.0/sites?search=*",
+  "enumDrives": "https://graph.microsoft.com/v1.0/sites/{site-id}/drives",
+  "enumFiles": "https://graph.microsoft.com/v1.0/sites/{site-id}/drives/{drive-id}",
+  "getInfoAboutFiles": "https://graph.microsoft.com/v1.0/sites/{site-id}/drives/{drive-id}/root:/{item-path}"
+}
