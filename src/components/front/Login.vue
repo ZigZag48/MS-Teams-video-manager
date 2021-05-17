@@ -59,9 +59,9 @@ export default {
     auth: async function () {
       var config = {
         auth: {
-          clientId: "75970af2-3996-47c5-945e-a9e06d043da3",
+          clientId: "aa507646-c06e-4496-8435-b8fbbb6c6c1a",
           authority: "https://login.microsoftonline.com/common",
-          redirectUri: "http://localhost:8081",
+          redirectUri: "https://delightful-dune-034eeef03.azurestaticapps.net",
         },
       };
       var client = new Msal.UserAgentApplication(config);
