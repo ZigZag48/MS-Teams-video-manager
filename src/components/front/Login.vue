@@ -61,7 +61,7 @@ export default {
         auth: {
           clientId: "75970af2-3996-47c5-945e-a9e06d043da3",
           authority: "https://login.microsoftonline.com/common",
-          redirectUri: "http://localhost:8081",
+          redirectUri: "https://delightful-dune-034eeef03.azurestaticapps.net",
         },
       };
       var client = new Msal.UserAgentApplication(config);
