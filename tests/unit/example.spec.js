@@ -1,5 +1,5 @@
 import { shallowMount } from "@vue/test-utils";
-// import HelloWorld from "@/components/HelloWorld.vue";
+// import Settings from "@/components/Settings.vue";
 import Table from "@/views/Table.vue";
 import Menu from "../../src/components/front/Menu.vue";
 import Login from "../../src/components/front/Login.vue";
@@ -18,9 +18,3 @@ describe("Login page", () => {
     console.log(wrapper);
   });
 });
-
-// describe("Table.vue", () => {
-//   it("Check classes", () => {
-//     shallowMount(Table);
-//   });
-// });
