@@ -37,18 +37,22 @@
       </b-field>
     </div>
     <footer class="modal-card-foot">
-      <b-button label="Close" @click="$parent.close()" />
-      <b-button label="Save" @click="runevent" type="is-primary" />
+      <b-button rounded label="Close" @click="$parent.close()"></b-button>
+      <!-- <b-button label="Save" @click="runevent" type="is-primary" /> -->
+      <SaveBTN @clickthis="runevent" />
     </footer>
   </div>
 </template>
 
 <script>
+import SaveBTN from "./front/SaveBtn";
 export default {
   name: "Settings",
+  components: { SaveBTN },
   props: ["email", "password", "dateformat", "isBordered", "isStriped", "isNarrowed", "isHoverable", "isFocusable"],
   methods: {
     runevent() {
+      console.log("gedir");
       this.$emit(
         "setSettings",
         this.dateformat1,

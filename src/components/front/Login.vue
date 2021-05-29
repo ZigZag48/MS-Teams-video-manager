@@ -25,7 +25,6 @@
 </template>
 
 <script>
-// import jQuery from "jquery";
 import * as Msal from "msal";
 var $ = require("jquery");
 export default {
@@ -41,21 +40,6 @@ export default {
     });
   },
   methods: {
-    // customAuth: async function () {
-    //   const config = {
-    //     auth: {
-    //       clientId: "your_app_id",
-    //       redirectUri: "your_app_redirect_uri", //defaults to application start page
-    //       postLogoutRedirectUri: "your_app_logout_redirect_uri",
-    //     },
-    //   };
-    //   const loginRequest = {
-    //     scopes: ["User.ReadWrite"],
-    //   };
-
-    //   let username = "";
-    //   const myMsal = new PublicClientApplication(config);
-    // },
     auth: async function () {
       var config = {
         auth: {
@@ -209,7 +193,7 @@ form button {
   background-color: white;
   border: 0;
   padding: 10px 15px;
-  color: #53e3a6;
+  color: #84ebc0;
   border-radius: 3px;
   width: 250px;
   cursor: pointer;

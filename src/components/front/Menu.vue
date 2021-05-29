@@ -7,8 +7,8 @@
             <ul>
               <a href="#t1"><li id="uno">Login</li></a>
               <a href="#t2"><li id="dos">Content</li></a>
-              <a href="#t3"><li id="tres">Set paths</li></a>
-              <a href="#t4"><li id="cuatro">About</li></a>
+              <!-- <a href="#t3"><li id="tres">Set paths</li></a>
+              <a href="#t4"><li id="cuatro">About</li></a> -->
             </ul>
             <div class="page login" id="p1">
               <Login />
@@ -16,12 +16,12 @@
             <div class="page" id="p2">
               <TableTH />
             </div>
-            <div class="page" id="p3">
+            <!-- <div class="page" id="p3">
               <Player />
-            </div>
-            <div class="page" id="p4">
+            </div> -->
+            <!-- <div class="page" id="p4">
               <Settings />
-            </div>
+            </div> -->
           </section>
         </div>
       </div>
@@ -32,11 +32,11 @@
 <script>
 import TableTH from "../../views/Table";
 import Login from "./Login";
-import Player from "./Player";
-import Settings from "../Settings.vue";
+// import Player from "./Player";
+// import Settings from "../Settings.vue";
 
 export default {
-  components: { TableTH, Login, Player, Settings },
+  components: { TableTH, Login },
   data() {
     return {};
   },
