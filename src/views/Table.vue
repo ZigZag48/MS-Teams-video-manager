@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <section v-if="loading" class="tablegen">
+    <section v-if="!loading" class="tablegen">
       <b-field grouped group-multiline>
         <!-- <div class="control">
         <b-checkbox v-model="showDetailIcon">Detail column</b-checkbox>
@@ -11,8 +11,11 @@
         </b-checkbox>
       </div> -->
         <b-button label="Clear checked" type="is-danger" icon-left="close" class="field" @click="checkedRows = []" />
-        <b-button label="Download all" type="is-primary" v-on:click="groupAndLoad" />
-        <b-button label="Download selected" type="is-primary is-light" v-on:click="downloadSelected" />
+        <b-button label="Download all" type="is-primary" v-on:click="groupAndLoad" class="field" />
+        <b-button label="Download selected" type="is-primary is-light" v-on:click="downloadSelected" class="field" />
+        <b-button label="Settings" type="is-primary" @click="showModal" class="field" />
+
+        <!-- <Settings /> -->
         <!-- <b-select v-model="checkboxPosition">
           <option value="left">Checkbox at left</option>
           <option value="right">Checkbox at right</option>
@@ -25,7 +28,6 @@
         :data="filteredData"
         ref="table"
         detailed
-        hoverable
         custom-detail-row
         :checked-rows.sync="checkedRows"
         checkable
@@ -34,6 +36,11 @@
         detail-key="displayName"
         @details-open="(row, index) => $buefy.toast.open(`Expanded ${row.displayName}`)"
         :show-detail-icon="showDetailIcon"
+        :bordered="isBordered"
+        :striped="isStriped"
+        :narrowed="isNarrowed"
+        :hoverable="isHoverable"
+        :focusable="isFocusable"
       >
         <b-table-column
           field="displayName"
@@ -129,6 +136,18 @@
         <Loading />
       </div>
     </section>
+    <b-modal v-model="isComponentModalActive" has-modal-card full-screen :can-cancel="false">
+      <Settings
+        :dateformat="dateFormats"
+        :bordered="isBordered"
+        :striped="isStriped"
+        :narrowed="isNarrowed"
+        :hoverable="isHoverable"
+        :focusable="isFocusable"
+        v-bind="formProps"
+        @setSettings="setSettings"
+      ></Settings>
+    </b-modal>
   </div>
 </template>
 
@@ -141,12 +160,20 @@ import JsZip from "jszip";
 import JSZipUtils from "jszip-utils";
 import FileSaver from "file-saver";
 import { saveAs } from "save-as";
+import Settings from "../components/Settings.vue";
 
 export default {
   props: ["propData"],
-  components: { Loading },
+  components: { Loading, Settings },
   data() {
     return {
+      isBordered: false,
+      isStriped: false,
+      isNarrowed: false,
+      isHoverable: false,
+      isFocusable: false,
+
+      isComponentModalActive: false,
       checkedRows: [],
       checkboxPosition: "left",
       columnsVisible: {
@@ -161,10 +188,30 @@ export default {
       filteredData: [],
       urlArrays: [],
       selectedUrls: [],
-      loading: true,
+      loading: false,
+      formProps: {
+        email: "evan@you.com",
+        password: "testing",
+      },
+      dateFormats: "MMMM Do YYYY",
     };
   },
   methods: {
+    showModal: function () {
+      this.isComponentModalActive = true;
+    },
+    setSettings: function (sets, isBordered, isStriped, isNarrowed, isHowerable, isFocusable) {
+      this.dateFormats = sets;
+      this.isBordered = isBordered;
+      this.isStriped = isStriped;
+      this.isNarrowed = isNarrowed;
+      this.isHoverable = isHowerable;
+      this.isFocusable = isFocusable;
+      this.filteredData = [];
+      this.urlArrays = [];
+      this.auth();
+      console.log(sets);
+    },
     defineName: function (arr, url) {
       let file = {};
       arr.forEach((element) => {
@@ -187,9 +234,7 @@ export default {
     },
     downloadSelected: function () {
       this.getUrls(this.checkedRows);
-      console.log(this.selectedUrls);
 
-      this.loading = false;
       var zip = new JsZip();
       var count = 0;
       var zipFilename = "zipFilename.zip";
@@ -211,13 +256,12 @@ export default {
               .then((content) => {
                 saveAs(content, zipFilename);
               })
-              .finally((this.loading = true));
+              .finally();
           }
         });
       });
     },
     groupAndLoad() {
-      this.loading = false;
       var zip = new JsZip();
       var count = 0;
       var zipFilename = "zipFilename.zip";
@@ -239,13 +283,13 @@ export default {
               .then((content) => {
                 saveAs(content, zipFilename);
               })
-              .finally((this.loading = true));
+              .finally();
           }
         });
       });
+      return (this.loading = false);
     },
     downEvery: function () {
-      this.loading = false;
       this.downloadAndZip(this.urlArrays);
     },
     download: async function (url) {
@@ -279,31 +323,22 @@ export default {
     downloadAndZip: async function (urls) {
       return this.downloadByGroup(urls, 5)
         .then(this.exportZip)
-        .finally(() => {
-          setTimeout(() => {
-            this.loading = true;
-          }, 4000);
-        });
+        .finally(() => {});
     },
 
     auth: async function () {
-      this.filteredData = [];
-
       let payload = await fetch(this.endpoints.enumAllSites, {
         headers: {
           Authorization: "Bearer " + this.$store.getters.getToken.accessToken,
         },
       });
-      console.log("yetka");
-      console.log(payload);
       let tmpJson = await payload.json();
-      console.log(tmpJson);
       tmpJson.value.forEach((element) => {
         let obj = {};
         obj.displayName = element.displayName;
         obj.webUrl = element.webUrl;
         obj.lastModifiedDateTime = element.lastModifiedDateTime; //moment(element.lastModifiedDateTime).format("MMMM Do YYYY");
-        obj.createdDateTime = moment(element.createdDateTime).format("MMMM Do YYYY");
+        obj.createdDateTime = moment(element.createdDateTime).format(this.dateFormats);
 
         obj.id = element.id;
         obj.items = [obj];
@@ -331,13 +366,12 @@ export default {
         );
 
         let basi2 = await payload2.json();
-        console.log("basi");
         element.items = basi2.value;
 
         element.items.forEach((el) => {
           el.displayName = el["name"];
           el.download = el["@microsoft.graph.downloadUrl"];
-          el.createdDateTime = moment(el["createdDateTime"]).format("MMMM Do YYYY");
+          el.createdDateTime = moment(el["createdDateTime"]).format(this.dateFormats);
           // el.lastModifiedDateTime = el["lastModifiedDateTime"]; //moment(el["lastModifiedDateTime"]).format("MMMM Do YYYY");
           if (moment().diff(moment(el.lastModifiedDateTime), "days") > 7) {
             el.late = false;
@@ -361,9 +395,7 @@ export default {
 
   watch: {
     count() {
-      console.log("dassaax");
       this.auth();
-      console.log(this.filteredData);
     },
   },
 };

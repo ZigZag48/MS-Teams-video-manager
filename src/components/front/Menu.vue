@@ -19,7 +19,9 @@
             <div class="page" id="p3">
               <Player />
             </div>
-            <div class="page" id="p4"></div>
+            <div class="page" id="p4">
+              <Settings />
+            </div>
           </section>
         </div>
       </div>
@@ -31,9 +33,10 @@
 import TableTH from "../../views/Table";
 import Login from "./Login";
 import Player from "./Player";
+import Settings from "../Settings.vue";
 
 export default {
-  components: { TableTH, Login, Player },
+  components: { TableTH, Login, Player, Settings },
   data() {
     return {};
   },

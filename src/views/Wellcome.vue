@@ -16,46 +16,12 @@
         <section class="words">
           <div class="container">
             <TableTH />
-            <!-- <h3>Et quidem, inquit, vehementer errat;</h3>
-
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Non enim iam stirpis bonum quaeret, sed animalis. Primum divisit
-              ineleganter;
-              <a href="http://loripsum.net/" target="_blank">Sic consequentibus vestris sublatis prima tolluntur.</a> Consequentia
-              exquirere, quoad sit id, quod volumus, effectum. Duo Reges: constructio interrete. Pisone in eo gymnasio, quod Ptolomaeum
-              vocatur, unaque nobiscum Q. Callipho ad virtutem nihil adiunxit nisi voluptatem, Diodorus vacuitatem doloris. Quorum sine
-              causa fieri nihil putandum est. Praeteritis, inquit, gaudeo. Quod si ita se habeat, non possit beatam praestare vitam
-              sapientia.
-            </p> -->
           </div>
         </section>
 
         <section class="words">
           <div class="container"></div>
         </section>
-        <!-- <section class="clearfix"></section>
-
-        <section class="words">
-          <div class="container"></div>
-        </section>
-
-        <section class="clearfix"></section>
-
-        <section class="words">
-          <div class="container">
-            <p>
-              Quasi vero, inquit, perpetua oratio rhetorum solum, non etiam philosophorum sit. Sed tamen est aliquid, quod nobis non liceat,
-              liceat illis. Si enim ad populum me vocas, eum. Quod autem ratione actum est, id officium appellamus. Apud ceteros autem
-              philosophos, qui quaesivit aliquid, tacet; Longum est enim ad omnia respondere, quae a te dicta sunt.
-            </p>
-
-            <p>
-              Vitiosum est enim in dividendo partem in genere numerare. Eaedem res maneant alio modo. Quae in controversiam veniunt, de iis,
-              si placet, disseramus. Videsne quam sit magna dissensio? Quos quidem tibi studiose et diligenter tractandos magnopere censeo.
-              Si quicquam extra virtutem habeatur in bonis. Sed nimis multa.
-            </p>
-          </div>
-        </section> -->
       </div>
     </div>
   </div>
@@ -127,7 +93,6 @@ export default {
         },
 
         click_btn: function () {
-          // let active = this.auth();
           btn.on("click", function () {
             page.addClass("loaded");
             btn.addClass("hideThis");
@@ -135,7 +100,6 @@ export default {
           });
         },
 
-        // for firefox i try in css but not work
         animations: function () {
           var tl = $(".loaded .tl"),
             tr = $(".loaded .tr"),
